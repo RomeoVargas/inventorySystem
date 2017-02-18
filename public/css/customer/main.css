@@ -1,0 +1,44 @@
+body {
+    font-family: "Arial";
+}
+
+.navbar-brand {
+    font-family: "Arial Narrow";
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: tomato !important;
+}
+
+.container {
+    margin-top: 70px;
+}
+
+.carousel .item img {
+    width: 100%;
+    height: 80vh;
+    margin: 0 auto;
+}
+
+.modal-content .modal-header {
+    background-repeat: repeat;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('http://silviahartmann.com/background-tile-art/images/grey-repeating-background-8.jpg');
+    color: tomato;
+}
+
+.modal-content .modal-header .close{
+    color: white;
+}
+
+.form-group label {
+    font-size: 0.8em;
+}
+
+.loginContainer {
+    width: 20vw;
+    text-align: center !important;
+}
+
+.loginContainer .loginRow {
+    width: 90%;
+    margin: 5px 3% 0;
+}
