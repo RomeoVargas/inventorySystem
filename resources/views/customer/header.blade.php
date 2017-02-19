@@ -20,7 +20,7 @@
                         <a class="navbar-item" href="{{ url('home') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="{{ trim($routeName, '/') == 'products' ? 'active' : '' }}">
-                        <a class="navbar-item" href="#">Products</a>
+                        <a class="navbar-item" href="{{ url('products') }}">Products</a>
                     </li>
                     <li class="{{ trim($routeName, '/') == 'about-us' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('about-us') }}">About Us</a>
@@ -34,7 +34,7 @@
                             Hi {{ $user->first_name }}! How may i help you? <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> View my Cart</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> View my Cart <span class="badge">42</span></a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> View my Orders</a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
                             <li role="separator" class="divider"></li>

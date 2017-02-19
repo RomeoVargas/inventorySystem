@@ -41,7 +41,7 @@
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
 
-        @yield('generalCustomJs');
-        @yield('specificCustomJs');
+        @yield('generalCustomJs')
+        @yield('specificCustomJs')
     </body>
 </html>
