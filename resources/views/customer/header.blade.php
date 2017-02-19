@@ -28,8 +28,23 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                @if($user = \Illuminate\Support\Facades\Auth::user())
+                    <li class="dropdown">
+                        <a href="#" class="welcome-note dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Hi {{ $user->first_name }}! How may i help you? <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> View my Cart</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> View my Orders</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url('/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                @else
                     <li><a href="#" data-toggle="popover" data-content='@yield("login")'>Login</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></li>
+                @endif
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -40,7 +55,7 @@
     @include('customer.modal.register')
 @endsection
 
-@section('customJs')
+@section('generalCustomJs')
     @if(session('loginError'))
         <script>
             $(document).ready(function() {

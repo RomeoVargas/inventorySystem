@@ -24,6 +24,5 @@ Route::get('/about-us', function () {
 });
 
 Route::post('/login', 'Customer\LoginController@authenticate');
-
-
-//Route::get('/home', 'HomeController@index');
+Route::post('/register', 'Customer\LoginController@create');
+Route::get('/logout', 'Customer\LoginController@logout');
