@@ -19,6 +19,12 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('customer.welcome');
 });
+Route::get('/products', function () {
+    return view('customer.products');
+});
+Route::get('/about-us', function () {
+    return view('customer.aboutUs');
+});
 Route::get('/logout', 'Customer\LoginController@logout');
 
 Route::group(['middleware' => 'noLoginRequired'], function() {
@@ -27,12 +33,7 @@ Route::group(['middleware' => 'noLoginRequired'], function() {
 });
 
 Route::group(['middleware' => 'loginRequired'], function() {
-    Route::get('/products', function () {
-        return view('customer.products');
-    });
-    Route::get('/about-us', function () {
-        return view('customer.aboutUs');
-    });
+    // Add to cart, update profile, view cart/orders page here
 });
 
 // ADMIN RELATED PAGES
