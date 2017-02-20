@@ -1,4 +1,4 @@
-@extends('layout.customer.main')
+@extends('layout.main')
 @section('content')
     <h1 style="margin-top: 0;">COMPANY PROFILE</h1>
     <div class="row">

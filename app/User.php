@@ -9,8 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const AUTH_TYPE_CUSTOMER    = 0;
-    const AUTH_TYPE_ADMIN       = 500;
+    const AUTH_TYPE_CUSTOMER    = 1;
+    const AUTH_TYPE_ADMIN       = 2;
 
     const MAX_LENGTH_EMAIL = 50;
 

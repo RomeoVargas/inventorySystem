@@ -1,4 +1,4 @@
-@extends('layout.customer.main')
+@extends('layout.main')
 @section('content')
     <form class="navbar-form" role="search" style="margin-top: 0;">
         <div class="input-group">
@@ -12,7 +12,7 @@
     <div class="text-center">
         @for($i = 0; $i <= 100; $i++)
             <div class="product-item">
-                <img class="product-image" src="uploads/product{{ $i % 2 == 0 ? '1' : '2' }}.jpg">
+                <img class="product-image" src="{{ url('uploads/product'.($i % 2 == 0 ? '1' : '2').'.jpg') }}">
                 <div class="col-sm-12">Product {{ $i }} title here title here title here title here title here title here title here</div>
                 <div class="price col-sm-12 text-right">₱ {{ number_format(1000000) }}</div>
                 <div class="col-sm-12 text-right">

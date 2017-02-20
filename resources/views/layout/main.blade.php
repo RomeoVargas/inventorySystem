@@ -1,3 +1,9 @@
+@if(explode('/', get_route_name())[0] == 'admin')
+    @include('admin.header')
+@else
+    @include('customer.header')
+@endif
+
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>

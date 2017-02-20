@@ -1,5 +1,8 @@
 body {
     font-family: "Arial";
+    background: url("../../img/customer-bg.jpg");
+    background-size: 20%;
+    background-repeat: repeat;
 }
 
 .navbar-brand {
@@ -54,6 +57,7 @@ body {
 }
 
 .product-item {
+    background: white;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.6);
     padding: 15px;
@@ -65,4 +69,15 @@ body {
 
 .product-item .price {
     color: tomato;
+}
+
+.admin-login {
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    background: white;
+}
+
+.admin-login .admin-loginRow {
+    margin-top: 5px;
 }

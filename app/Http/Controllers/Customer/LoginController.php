@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,7 @@ class LoginController extends Controller
             $email = $request->get('email');
             $password = $request->get('password');
 
-            $user = User::query()->where([
-                ['email', '=', $email],
-                ['password', '=', md5($password)],
-                ['auth_type', '=', User::AUTH_TYPE_CUSTOMER]
-            ])->first();
+            $user = UserService::authenticate($email, $password);
             $message = array(
                 'loginError' => 'Invalid email/password'
             );
