@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <div class="col-sm-12 text-center">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn btn-success">Register</button>
+                                <button class="btn btn-sm btn-primary btn-block" type="submit">Register</button>
                             </div>
                         </div>
                     </div>

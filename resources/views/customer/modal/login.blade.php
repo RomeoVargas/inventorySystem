@@ -18,7 +18,7 @@
         </div>
         <div class="loginRow">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>
         </div>
     </form>
 @endsection
