@@ -1,4 +1,4 @@
-@include('customer.modal.login')
+@include('customer.partial.login')
 @section('header')
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">

@@ -14,7 +14,7 @@ class LoginController extends BaseController
         $message = array();
         if (!Session::get('admin')) {
             $email = $request->get('email');
-            $password = $request->get('email');
+            $password = $request->get('password');
 
             $user = UserService::authenticate($email, $password, User::AUTH_TYPE_ADMIN);
             $message = array(
