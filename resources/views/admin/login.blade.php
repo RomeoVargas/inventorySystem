@@ -4,6 +4,16 @@
         <div class="col-md-offset-3 col-md-6">
             <img src="{{ asset('img/logo.jpg') }}" style="width: 100%;">
         </div>
+        @if($error = session('loginError'))
+            <div class="col-md-12 admin-loginRow text-center">
+                <div class="has-error alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{ $error }}</strong>
+                </div>
+            </div>
+        @endif
         <div class="col-md-12 admin-loginRow">
             <input type="email" class="form-control" name="email" placeholder="Email" required autofocus>
         </div>

@@ -19,30 +19,40 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('customer.welcome');
 });
-Route::get('/products', function () {
-    return view('customer.products');
-});
-Route::get('/about-us', function () {
-    return view('customer.aboutUs');
-});
-
-Route::post('/login', 'Customer\LoginController@authenticate');
-Route::post('/register', 'Customer\LoginController@create');
 Route::get('/logout', 'Customer\LoginController@logout');
 
-// ADMIN RELATED PAGES
-Route::get('/admin', function () {
-    return redirect('/admin/login');
-});
-Route::get('/admin/login', function () {
-    return view('admin.login');
-});
-Route::get('/admin/home', function () {
-    return view('admin.home');
-});
-Route::get('/admin/products', function () {
-    return view('customer.products');
+Route::group(['middleware' => 'noLoginRequired'], function() {
+    Route::post('/login', 'Customer\LoginController@authenticate');
+    Route::post('/register', 'Customer\LoginController@create');
 });
 
-Route::post('/admin/login', 'Admin\LoginController@authenticate');
+Route::group(['middleware' => 'loginRequired'], function() {
+    Route::get('/products', function () {
+        return view('customer.products');
+    });
+    Route::get('/about-us', function () {
+        return view('customer.aboutUs');
+    });
+});
+
+// ADMIN RELATED PAGES
 Route::get('/admin/logout', 'Admin\LoginController@logout');
+
+Route::group(['middleware' => 'noLoginRequired'], function() {
+    Route::get('/admin', function () {
+        return redirect('/admin/login');
+    });
+    Route::get('/admin/login', function () {
+        return view('admin.login');
+    });
+    Route::post('/admin/login', 'Admin\LoginController@authenticate');
+});
+
+Route::group(['middleware' => 'loginRequired'], function() {
+    Route::get('/admin/home', function () {
+        return view('admin.home');
+    });
+    Route::get('/admin/products', function () {
+        return view('customer.products');
+    });
+});
