@@ -65,11 +65,20 @@ Route::group(['middleware' => 'loginRequired'], function() {
         return view('admin.home');
     });
     Route::get('/admin/products', function () {
-        return view('customer.products');
+        return view('admin.products');
+    });
+    Route::get('/admin/brands', function () {
+        return view('admin.brands');
     });
     Route::get('/admin/edit-profile', function () {
         return view('customer.editProfile')->with([
             'user' => \App\Services\Session::get('admin')
         ]);
+    });
+    Route::get('/admin/order-list', function () {
+        return view('admin.orderList');
+    });
+    Route::get('/admin/accounts', function () {
+        return view('admin.accounts');
     });
 });

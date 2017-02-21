@@ -18,8 +18,8 @@
                     <li class="{{ trim($routeName, '/') == 'admin/home' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/home') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="{{ trim($routeName, '/') == 'admin/orders' ? 'active' : '' }}">
-                        <a class="navbar-item" href="{{ url('admin/orders') }}">Orders</a>
+                    <li class="{{ trim($routeName, '/') == 'admin/order-list' ? 'active' : '' }}">
+                        <a class="navbar-item" href="{{ url('admin/order-list') }}">Orders</a>
                     </li>
                     <li class="{{ trim($routeName, '/') == 'admin/products' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/products') }}">Products</a>
@@ -35,7 +35,7 @@
                             Admin Settings <span class="glyphicon glyphicon-cog"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="glyphicon glyphicon-log-in"></i> Manage Accounts</a></li>
+                            <li><a href="{{ url('admin/accounts') }}"><i class="glyphicon glyphicon-log-in"></i> Manage Accounts</a></li>
                             <li><a href="{{ url('admin/edit-profile') }}"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ url('admin/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>

@@ -81,3 +81,11 @@ body {
 .admin-login .admin-loginRow {
     margin-top: 5px;
 }
+
+.fixed-fab {
+    position: fixed;
+    bottom: 0;
+    right: 2%;
+    border-radius: 50%;
+    font-size: 15vh;
+}
