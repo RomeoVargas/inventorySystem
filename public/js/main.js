@@ -14,6 +14,9 @@ $(document).ready(function() {
         $('.form-group').removeClass('has-error');
         $('.form-group').find('.help-block').remove();
     }
+    $('.modal').on('hidden.bs.modal', function () {
+        location.reload();
+    });
 
     // Intercept submit.
     $('form.bootstrap-modal-form').on('submit', function(submission) {

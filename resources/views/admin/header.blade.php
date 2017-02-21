@@ -36,9 +36,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="glyphicon glyphicon-log-in"></i> Manage Accounts</a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
+                            <li><a href="{{ url('admin/edit-profile') }}"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ url('/admin/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                            <li><a href="{{ url('admin/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                         </ul>
                     </li>
                 </ul>

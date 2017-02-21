@@ -33,6 +33,17 @@ Route::group(['middleware' => 'noLoginRequired'], function() {
 });
 
 Route::group(['middleware' => 'loginRequired'], function() {
+    Route::get('/cart', function () {
+        return view('customer.cart');
+    });
+    Route::get('/order-list', function () {
+        return view('customer.orderList');
+    });
+    Route::get('/edit-profile', function () {
+        return view('customer.editProfile')->with([
+            'user' => \Illuminate\Support\Facades\Auth::user()
+        ]);
+    });
     // Add to cart, update profile, view cart/orders page here
 });
 
@@ -55,5 +66,10 @@ Route::group(['middleware' => 'loginRequired'], function() {
     });
     Route::get('/admin/products', function () {
         return view('customer.products');
+    });
+    Route::get('/admin/edit-profile', function () {
+        return view('customer.editProfile')->with([
+            'user' => \App\Services\Session::get('admin')
+        ]);
     });
 });
