@@ -67,6 +67,14 @@ body {
     text-align: left;
 }
 
+.needs-restock {
+    background: maroon!important;
+    color: lightblue;
+}
+.needs-restock a{
+    color: white;
+}
+
 .product-item .price {
     color: tomato;
 }

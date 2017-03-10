@@ -1,6 +1,9 @@
 @extends('layout.main')
+@section('pageTitle')
+    COMPANY PROFILE
+@endsection
+
 @section('content')
-    <h1 style="margin-top: 0;">COMPANY PROFILE</h1>
     <div class="row">
         <div class="col-md-7">
             There are three basic needs of man in order for him to prosper in this God given

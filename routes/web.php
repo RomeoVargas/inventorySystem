@@ -19,9 +19,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('customer.welcome');
 });
-Route::get('/products', function () {
-    return view('customer.products');
-});
+Route::get('/products', 'Customer\ProductController@index');
 Route::get('/about-us', function () {
     return view('customer.aboutUs');
 });
@@ -33,9 +31,9 @@ Route::group(['middleware' => 'noLoginRequired'], function() {
 });
 
 Route::group(['middleware' => 'loginRequired'], function() {
-    Route::get('/cart', function () {
-        return view('customer.cart');
-    });
+    Route::get('/cart', 'Customer\CartController@index');
+    Route::post('/cart/save', 'Customer\CartController@saveItem');
+    Route::get('/cart/delete/{id}', 'Customer\CartController@deleteItem');
     Route::get('/order-list', function () {
         return view('customer.orderList');
     });
@@ -64,9 +62,9 @@ Route::group(['middleware' => 'loginRequired'], function() {
     Route::get('/admin/home', function () {
         return view('admin.home');
     });
-    Route::get('/admin/products', function () {
-        return view('admin.products');
-    });
+    Route::get('/admin/products', 'Admin\ProductController@index');
+    Route::post('/admin/products/save', 'Admin\ProductController@save');
+    Route::get('admin/products/delete/{id}', 'Admin\ProductController@delete');
     Route::get('/admin/brands', function () {
         return view('admin.brands');
     });

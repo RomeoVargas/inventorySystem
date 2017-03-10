@@ -4,6 +4,12 @@ $(".nav .navbar-item").on("click", function(){
 });
 
 $(document).ready(function() {
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('#delete-item-type').text($(e.relatedTarget).data('item-type'));
+        $(this).find('#delete-item-name').text('• ' + $(e.relatedTarget).data('item-name'));
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+
     $('[data-toggle="popover"]').popover({
         html: true,
         placement: 'auto bottom'

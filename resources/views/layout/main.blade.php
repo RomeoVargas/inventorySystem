@@ -1,4 +1,4 @@
-@if(explode('/', get_route_name())[0] == 'admin')
+@if($isAdmin = explode('/', get_route_name())[0] == 'admin')
     @include('admin.header')
 @else
     @include('customer.header')
@@ -14,6 +14,7 @@
         <!-- CSS -->
         <link href="{{ asset('css/bootstrap-theme.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/jasny-bootstrap/jasny-bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/customer/main.css') }}" rel="stylesheet">
 
     </head>
@@ -21,6 +22,7 @@
         @yield('header')
 
         <div class="container">
+            <h1 style="margin-top: 0;">@yield('pageTitle')</h1>
             @if($error = session('error'))
                 <div class="alert alert-danger alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -41,10 +43,15 @@
 
         @yield('footer')
         @yield('modal')
+        @if(!$isAdmin && !\Illuminate\Support\Facades\Auth::user())
+            @include('customer.modal.register')
+        @endif
+        @include('modal.confirmDelete')
 
         <!-- JAVASCRIPT -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jasny-bootstrap/jasny-bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
 
         @yield('generalCustomJs')

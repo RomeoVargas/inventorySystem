@@ -1,24 +1,66 @@
 @extends('layout.main')
 @section('content')
-    <form class="navbar-form" role="search" style="margin-top: 0;">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="key" id="srch-term">
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-            </div>
-        </div>
-    </form>
-
-    <div class="text-center">
-        @for($i = 0; $i <= 100; $i++)
-            <div class="product-item">
-                <img class="product-image" src="{{ url('uploads/product'.($i % 2 == 0 ? '1' : '2').'.jpg') }}">
-                <div class="col-sm-12">Product {{ $i }} title here title here title here title here title here title here title here</div>
-                <div class="price col-sm-12 text-right">₱ {{ number_format(1000000) }}</div>
-                <div class="col-sm-12 text-right">
-                    <button class="btn btn-sm btn-info">Add to cart <i class="glyphicon glyphicon-shopping-cart"></i></button>
+    @if($numTotalProducts)
+        <form class="navbar-form" role="search" style="margin-top: 0;">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="key" id="srch-term" value="{{ $key }}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
-        @endfor
-    </div>
+        </form>
+
+        <div class="text-center">
+            @if($products->count())
+                @foreach($products as $product)
+                    <div class="product-item">
+                        <div class="col-sm-12">{{ $product->name }}</div>
+                        <img class="product-image" src="{{ $product->getImage() }}">
+                        <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
+                        <div class="price col-sm-12 text-right">{{ number_format($product->stocks_left) }} in stock</div>
+                        <div class="col-sm-12">{{ $product->description }}</div>
+                        <div class="col-sm-12 text-right">
+                            <a data-toggle="modal" data-target="#addToCartModal{{$product->id}}" class="btn btn-sm btn-info">
+                                Add to cart <i class="glyphicon glyphicon-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-sm-offset-1 col-sm-10 alert alert-warning">
+                    No results found.
+                </div>
+            @endif
+        </div>
+    @else
+        <div class="alert alert-warning">
+            <strong>There are no products added yet</strong>
+        </div>
+    @endif
+@endsection
+
+@section('modal')
+    @foreach($products as $product)
+        @php
+            $id = $product->id;
+            $cartId = isset($cartItems[$id]) ? $cartItems[$id]->id : null;
+            $quantity = isset($cartItems[$id]) ? $cartItems[$id]->quantity : null;
+            $name = $product->name;
+            $image = $product->getImage();
+            $price = $product->price;
+            $stocks = $product->stocks_left;
+            $description = $product->description;
+        @endphp
+        @include('customer.modal.addToCart')
+    @endforeach
+@endsection
+
+@section('specificCustomJs')
+    @if(count($errors) > 0)
+        <script>
+            $(window).load(function(){
+                $('#addToCartModal{{ session('productId') }}').modal('show');
+            });
+        </script>
+    @endif
 @endsection

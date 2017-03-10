@@ -3,9 +3,11 @@
         <div class="col-md-4">
             @include('admin.partial.orderSummary')
         </div>
-        <div class="col-md-4">
-            @include('admin.partial.productSummary')
-        </div>
+        @if($numNeedsRestock = \App\Models\Product::getNumNeedsRestock())
+            <div class="col-md-4">
+                @include('admin.partial.productSummary')
+            </div>
+        @endif
         <div class="col-md-4">
             @include('admin.partial.userSummary')
         </div>

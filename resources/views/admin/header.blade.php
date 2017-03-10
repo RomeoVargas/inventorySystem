@@ -24,9 +24,6 @@
                     <li class="{{ trim($routeName, '/') == 'admin/products' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/products') }}">Products</a>
                     </li>
-                    <li class="{{ trim($routeName, '/') == 'admin/brands' ? 'active' : '' }}">
-                        <a class="navbar-item" href="{{ url('admin/brands') }}">Brands</a>
-                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

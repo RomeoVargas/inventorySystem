@@ -51,10 +51,6 @@
     </nav>
 @endsection
 
-@section('modal')
-    @include('customer.modal.register')
-@endsection
-
 @section('generalCustomJs')
     @if(session('loginError'))
         <script>
