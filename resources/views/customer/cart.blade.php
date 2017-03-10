@@ -4,11 +4,9 @@
 @endsection
 
 @section('content')
-    <div class="col-md-12">
-        <div class="alert alert-info col-md-12">
-            <div class="col-md-offset-2 col-md-3"><strong>Total item(s) in Cart:</strong> {{ number_format($cartItems->count()) }}</div>
-            <div class="col-md-offset-2 col-md-3"><strong>Total Price:</strong> ₱ {{ number_format($totalPrice) }}</div>
-        </div>
+    <div class="alert alert-info col-md-12">
+        <div class="col-md-offset-2 col-md-3"><strong>Total item(s) in Cart:</strong> {{ number_format($cartItems->count()) }}</div>
+        <div class="col-md-offset-2 col-md-3"><strong>Total Price:</strong> ₱ {{ number_format($totalPrice) }}</div>
     </div>
     <div class="text-center">
         @foreach($cartItems as $cartItem)
@@ -37,9 +35,10 @@
     @foreach($cartItems as $cartItem)
         @php
             $product = $cartItem->getProduct();
+            $id = $product->id;
             $cartId = $cartItem->id;
             $quantity = $cartItem->quantity;
-            $id = $product->id;
+            $urlFrom = 'cart';
             $name = $product->name;
             $image = $product->getImage();
             $price = $product->price;

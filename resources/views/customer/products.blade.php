@@ -45,6 +45,7 @@
             $id = $product->id;
             $cartId = isset($cartItems[$id]) ? $cartItems[$id]->id : null;
             $quantity = isset($cartItems[$id]) ? $cartItems[$id]->quantity : null;
+            $urlFrom = 'products';
             $name = $product->name;
             $image = $product->getImage();
             $price = $product->price;

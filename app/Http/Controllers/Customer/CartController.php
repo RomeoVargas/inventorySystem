@@ -42,7 +42,7 @@ class CartController extends Controller
                 ['quantity' => 'required|min:1|max:'.$product->stocks_left.'|numeric']
             );
             if ($validator->fails()) {
-                return redirect('products')
+                return redirect($request->get('urlFrom', 'cart'))
                     ->with(['productId' => $productId])
                     ->withErrors($validator)
                     ->withInput();

@@ -57,6 +57,7 @@
                             <div class="col-sm-12 text-center">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="id" value="{{ $id }}">
+                                <input type="hidden" name="urlFrom" value="{{ $urlFrom }}">
                                 <button class="btn btn-sm btn-primary btn-block" type="submit">Submit</button>
                             </div>
                         </div>
