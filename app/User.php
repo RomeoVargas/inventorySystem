@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class, 'user_id')->getResults();
     }
+
+    public function getFullName()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
 }

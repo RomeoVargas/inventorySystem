@@ -74,9 +74,7 @@ Route::group(['middleware' => 'loginRequired'], function() {
             'user' => \App\Services\Session::get('admin')
         ]);
     });
-    Route::get('/admin/order-list', function () {
-        return view('admin.orderList');
-    });
+    Route::get('/admin/order/list', 'Admin\OrderController@index');
     Route::get('/admin/accounts', function () {
         return view('admin.accounts');
     });

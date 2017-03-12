@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Cart;
 use App\Order;
 use App\OrderItem;
-use App\Product;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -38,7 +36,7 @@ class OrderController extends Controller
             'dateTo'    => $dateTo,
             'status'    => $status,
             'allOrders' => $allOrders,
-            'orders'    => Order::search($user->id, $dateFrom, $dateTo, $status)
+            'orders'    => Order::search($dateFrom, $dateTo, $user->id, $status)
         ]);
     }
 

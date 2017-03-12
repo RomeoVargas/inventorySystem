@@ -98,13 +98,15 @@ class Order extends Model
         }
     }
 
-    public static function search($userId, $dateFrom, $dateTo, $status = null)
+    public static function search($dateFrom, $dateTo, $userId = null, $status = null)
     {
         $condition = array(
-            ['user_id', '=', $userId],
             ['created_at', '>=', to_time_format($dateFrom, 'Y-m-d 00:00:00')],
             ['created_at', '<=', to_time_format($dateTo, 'Y-m-d 23:59:59')],
         );
+        if ($userId) {
+            $condition[] = array('user_id', '=', $userId);
+        }
         if ($status) {
             $condition[] = array('status', '=', $status);
         }
@@ -113,6 +115,24 @@ class Order extends Model
             ->where($condition)
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public static function getSummary($dateFrom, $dateTo)
+    {
+        $orders = self::search($dateFrom, $dateTo);
+
+        $summary = array(
+            self::STATUS_NEW            => 0,
+            self::STATUS_FOR_DELIVER    => 0,
+            self::STATUS_COMPLETED      => 0,
+            self::STATUS_CANCELLED      => 0,
+            self::STATUS_UNPAID         => 0,
+        );
+        foreach ($orders as $order) {
+            $summary[$order->status]++;
+        }
+
+        return $summary;
     }
 
     public static function getByReferenceNumber($refNum)

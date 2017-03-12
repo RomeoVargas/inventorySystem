@@ -18,8 +18,8 @@
                     <li class="{{ trim($routeName, '/') == 'admin/home' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/home') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="{{ trim($routeName, '/') == 'admin/order-list' ? 'active' : '' }}">
-                        <a class="navbar-item" href="{{ url('admin/order-list') }}">Orders</a>
+                    <li class="{{ trim($routeName, '/') == 'admin/order/list' ? 'active' : '' }}">
+                        <a class="navbar-item" href="{{ url('admin/order/list') }}">Orders</a>
                     </li>
                     <li class="{{ trim($routeName, '/') == 'admin/products' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/products') }}">Products</a>

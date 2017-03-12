@@ -43,7 +43,7 @@
                             @if($order->isNew())
                                 <a data-href="{{ url('order/cancel', ['refnum' => $order->getReferenceNumber()]) }}" data-action="cancel"
                                    data-toggle="modal" data-item-type="order" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
-                                   data-target="#confirm-delete" class="btn btn-danger">
+                                   data-target="#confirm-delete" class="btn btn-sm btn-danger">
                                     <i class="glyphicon glyphicon-remove"></i> Cancel
                                 </a>
                             @endif
