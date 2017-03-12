@@ -3,7 +3,7 @@
         <div class="col-md-4">
             @include('admin.partial.orderSummary')
         </div>
-        @if($numNeedsRestock = \App\Models\Product::getNumNeedsRestock())
+        @if($numNeedsRestock = \App\Product::getNumNeedsRestock())
             <div class="col-md-4">
                 @include('admin.partial.productSummary')
             </div>

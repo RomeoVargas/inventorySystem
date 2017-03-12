@@ -16,8 +16,10 @@ class ProductController extends Controller
         $key = $request->get('key');
 
         $cartItems = array();
-        foreach(Auth::user()->getCartItems() as $cartItem) {
-            $cartItems[$cartItem->product_id] = $cartItem;
+        if ($user = Auth::user()) {
+            foreach($user->getCartItems() as $cartItem) {
+                $cartItems[$cartItem->product_id] = $cartItem;
+            }
         }
 
         $numTotalProducts = Product::query()

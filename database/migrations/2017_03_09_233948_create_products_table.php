@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->double('price');
             $table->string('description');
             $table->string('image_url')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }

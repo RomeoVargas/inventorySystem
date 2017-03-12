@@ -40,12 +40,12 @@ class ProductController extends BaseController
             if ($productId = $request->get('id')) {
                 $additionalRules['name'] = 'required|max:'.Product::MAX_LENGTH_NAME.'|unique:products,name,'.$productId;
                 if ($hasImageSubmitted = $request->files->has('image')) {
-                    $additionalRules['image'] = 'required|mimes:jpeg,jpg,png|max:2048';
+                    $additionalRules['image'] = 'required|file|mimes:jpeg,jpg,png|max:1024';
                 }
             } else {
                 $additionalRules = array(
                     'name'                  => 'required|unique:products|max:'.Product::MAX_LENGTH_NAME,
-                    'image'                 => 'required|mimes:jpeg,jpg,png|max:2048'
+                    'image'                 => 'required|file|mimes:jpeg,jpg,png|max:1024'
                 );
             }
 

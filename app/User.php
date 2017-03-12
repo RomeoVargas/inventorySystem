@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class, 'user_id')->getResults();
     }
+
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, 'user_id')->getResults();
+    }
 }

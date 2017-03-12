@@ -34,9 +34,10 @@ Route::group(['middleware' => 'loginRequired'], function() {
     Route::get('/cart', 'Customer\CartController@index');
     Route::post('/cart/save', 'Customer\CartController@saveItem');
     Route::get('/cart/delete/{id}', 'Customer\CartController@deleteItem');
-    Route::get('/order-list', function () {
-        return view('customer.orderList');
-    });
+
+    Route::get('/order/list', 'Customer\OrderController@index');
+    Route::post('/order/checkout', 'Customer\OrderController@checkout');
+    Route::get('/order/cancel/{id}', 'Customer\OrderController@cancel');
     Route::get('/edit-profile', function () {
         return view('customer.editProfile')->with([
             'user' => \Illuminate\Support\Facades\Auth::user()

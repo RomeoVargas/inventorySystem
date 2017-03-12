@@ -34,8 +34,14 @@
                             Hi {{ $user->first_name }}! How may i help you? <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url('cart') }}"><i class="glyphicon glyphicon-shopping-cart"></i> View my Cart <span class="badge">42</span></a></li>
-                            <li><a href="{{ url('order-list') }}"><i class="glyphicon glyphicon-list-alt"></i> View my Orders</a></li>
+                            @php($cartItemCount = $user->getCartItems()->count())
+                            <li><a href="{{ url('cart') }}"><i class="glyphicon glyphicon-shopping-cart"></i>
+                                    View my Cart
+                                    @if($cartItemCount)
+                                        <span class="badge">{{ $user->getCartItems()->count() }}</span>
+                                    @endif
+                                </a></li>
+                            <li><a href="{{ url('order/list') }}"><i class="glyphicon glyphicon-list-alt"></i> View my Orders</a></li>
                             <li><a href="{{ url('edit-profile') }}"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ url('/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
