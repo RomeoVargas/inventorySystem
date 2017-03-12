@@ -26,9 +26,9 @@
                     @if($orders->count())
                         <table class="table table-hover">
                             <thead>
+                            <th>Date Ordered</th>
                             <th>Customer</th>
                             <th>Ref #</th>
-                            <th>Date Ordered</th>
                             <th>Status</th>
                             <th>Items Ordered</th>
                             <th>Total Price</th>
@@ -37,9 +37,9 @@
 
                             @foreach($orders as $order)
                                 <tr class="{{ $order->getViewClass() }}">
+                                    <td>{{ to_time_format($order->created_at, 'F d, Y') }}</td>
                                     <td>{{ $order->getUser()->getFullName() }}</td>
                                     <td>{{ $order->getReferenceNumber() }}</td>
-                                    <td>{{ to_time_format($order->created_at, 'F d, Y') }}</td>
                                     <td>
                                         {{ $statuses[$order->status] }}
                                         @if($order->isNew())
