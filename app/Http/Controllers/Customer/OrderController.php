@@ -72,6 +72,8 @@ class OrderController extends Controller
                     'price'         => $product->price,
                     'quantity'      => $cartItem->quantity
                 ])->save();
+
+                $cartItem->delete();
             }
 
             $message = array('success' => 'Your order has been successfully submitted');

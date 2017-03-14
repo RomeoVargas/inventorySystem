@@ -37,7 +37,7 @@ Route::group(['middleware' => 'loginRequired'], function() {
 
     Route::get('/order/list', 'Customer\OrderController@index');
     Route::post('/order/checkout', 'Customer\OrderController@checkout');
-    Route::get('/order/cancel/{id}', 'Customer\OrderController@cancel');
+    Route::get('/order/cancel/{refnum}', 'Customer\OrderController@cancel');
     Route::get('/edit-profile', function () {
         return view('customer.editProfile')->with([
             'user' => \Illuminate\Support\Facades\Auth::user()
@@ -75,6 +75,8 @@ Route::group(['middleware' => 'loginRequired'], function() {
         ]);
     });
     Route::get('/admin/order/list', 'Admin\OrderController@index');
+    Route::post('/admin/order/setDelivery', 'Admin\OrderController@setDeliveryDate');
+    Route::get('/admin/order/updatePayment/{refnum}/{isPaid}', 'Admin\OrderController@approvePayment');
     Route::get('/admin/accounts', function () {
         return view('admin.accounts');
     });

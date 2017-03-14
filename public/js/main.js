@@ -12,6 +12,11 @@ $(document).ready(function() {
         $(this).find('#delete-item-name').text('• ' + $(e.relatedTarget).data('item-name'));
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
+    $('#confirm-payment').on('show.bs.modal', function(e) {
+        $(this).find('.payment-action').text($(e.relatedTarget).data('action'));
+        $(this).find('#order-refnum').text('• ' + $(e.relatedTarget).data('item-name'));
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
 
     $('[data-toggle="popover"]').popover({
         html: true,

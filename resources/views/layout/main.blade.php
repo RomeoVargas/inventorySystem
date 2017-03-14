@@ -43,8 +43,12 @@
 
         @yield('footer')
         @yield('modal')
-        @if(!$isAdmin && !\Illuminate\Support\Facades\Auth::user())
-            @include('customer.modal.register')
+        @if(!$isAdmin)
+            @if(!\Illuminate\Support\Facades\Auth::user())
+                @include('customer.modal.register')
+            @endif
+        @else
+            @include('modal.confirmPayment')
         @endif
         @include('modal.confirmDelete')
 

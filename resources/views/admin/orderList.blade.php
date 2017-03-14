@@ -42,16 +42,16 @@
                                     <td>{{ $order->getReferenceNumber() }}</td>
                                     <td>
                                         {{ $statuses[$order->status] }}
-                                        @if($order->isNew())
-                                            <a href="#" class="btn btn-sm btn-primary">
-                                                <i class="glyphicon glyphicon-send"></i> Deliver
-                                            </a>
-                                        @elseif($order->isForDeliver())
+                                        @if($order->isForDeliver())
                                             <div class="col-sm-12">
-                                                <a href="#" class="btn btn-sm btn-success">
+                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => true]) }}"
+                                                   data-action="paid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
+                                                   data-target="#confirm-payment" class="btn btn-sm btn-success">
                                                     <i class="glyphicon glyphicon-check"></i> Paid
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-danger">
+                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => false]) }}"
+                                                   data-action="paid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
+                                                   data-target="#confirm-payment" class="btn btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-remove"></i> Unpaid
                                                 </a>
                                             </div>
@@ -59,7 +59,15 @@
                                     </td>
                                     <td>{{ number_format($order->getItems()->count()) }}</td>
                                     <td>₱ {{ number_format($order->getTotalPrice()) }}</td>
-                                    <td>{{ to_time_format($order->date_delivered, 'F d, Y') ?: 'N/A' }}</td>
+                                    <td>
+                                        @if($order->isNew())
+                                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#setDeliveryDateModal{{$order->id}}">
+                                                <i class="glyphicon glyphicon-calendar"></i> Set Delivery Date
+                                            </a>
+                                        @else
+                                            {{ to_time_format($order->date_delivered, 'F d, Y') ?: 'N/A' }}
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
@@ -78,4 +86,23 @@
             @include('admin.partial.orderSummary')
         </div>
     </div>
+@endsection
+@section('modal')
+    @foreach($orders as $order)
+        @php
+            $id = $order->id;
+            $refNum = $order->getReferenceNumber();
+        @endphp
+        @include('admin.modal.setDeliveryDate')
+    @endforeach
+@endsection
+
+@section('specificCustomJs')
+    @if(count($errors) > 0)
+        <script>
+            $(window).load(function(){
+                $('#setDeliveryDateModal{{ session('orderId') }}').modal('show');
+            });
+        </script>
+    @endif
 @endsection

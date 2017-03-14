@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Order;
-use App\OrderItem;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use DB;
 
-class OrderController extends Controller
+class OrderController extends BaseController
 {
     public function index(Request $request)
     {
@@ -35,5 +32,64 @@ class OrderController extends Controller
             'allOrders' => Order::all(),
             'orders'    => Order::search($dateFrom, $dateTo, null, $status)
         ]);
+    }
+
+    public function setDeliveryDate(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $dayYesterday = Carbon::yesterday();
+            $validator = Validator::make(
+                $request->all(),
+                ['deliveryDate' => 'required|date|after:'.$dayYesterday->format('F d, Y')]
+            );
+            if ($validator->fails()) {
+                return $this->redirectTo('order/list')
+                    ->with(['orderId' => $request->get('id')])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $message = array('success' => 'Your order has been successfully submitted');
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'error' => $e->getMessage()
+            );
+        }
+
+        return $this->redirectTo('order/list')->with($message);
+    }
+
+    public function approvePayment($refNum, $isPaid = true)
+    {
+        DB::beginTransaction();
+        try {
+            if (!$order = Order::getByReferenceNumber($refNum)) {
+                throw new ModelNotFoundException('Order does not exist');
+            }
+            $newStatus = $isPaid ? Order::STATUS_COMPLETED : Order::STATUS_UNPAID;
+
+            if ($order->isCompleted()) {
+                throw new \InvalidArgumentException('That order is already completed');
+            }
+
+            if (!$order->isForDeliver()) {
+                throw new \InvalidArgumentException('Cannot update status! That order is already '.Order::$statuses[$order->status]);
+            }
+
+            $order->status = $newStatus;
+            $order->save();
+            $message = array('success' => 'Order #'.$order->getReferenceNumber().' has been successfully updated');
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'error' => $e->getMessage()
+            );
+        }
+
+        return $this->redirectTo('order/list')->with($message);
     }
 }

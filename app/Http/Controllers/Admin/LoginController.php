@@ -23,9 +23,6 @@ class LoginController extends BaseController
 
             if ($user) {
                 Session::set(['admin' => $user]);
-                $message = array(
-                    'success' => 'Welcome'
-                );
             }
         }
 
