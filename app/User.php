@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return self::query()->where('auth_type', '=', $type)->get()->count();
     }
+
+    public function isSuperAdmin()
+    {
+        return $this->auth_type == self::AUTH_TYPE_SUPER_ADMIN;
+    }
 }

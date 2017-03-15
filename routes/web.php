@@ -43,6 +43,7 @@ Route::group(['middleware' => 'loginRequired'], function() {
             'user' => \Illuminate\Support\Facades\Auth::user()
         ]);
     });
+    Route::post('/edit-profile', 'Customer\UserController@update');
     Route::post('/change-password', 'Customer\UserController@changePassword');
 });
 
@@ -74,11 +75,13 @@ Route::group(['middleware' => 'loginRequired'], function() {
             'user' => \App\Services\Session::get('admin')
         ]);
     });
+    Route::post('/admin/edit-profile', 'Admin\UserController@update');
+
     Route::get('/admin/order/list', 'Admin\OrderController@index');
     Route::post('/admin/order/setDelivery', 'Admin\OrderController@setDeliveryDate');
     Route::get('/admin/order/updatePayment/{refnum}/{isPaid}', 'Admin\OrderController@approvePayment');
-    Route::get('/admin/accounts', function () {
-        return view('admin.accounts');
-    });
+    Route::get('/admin/accounts', 'Admin\UserController@index');
+    Route::get('admin/accounts/delete/{id}', 'Admin\UserController@delete');
+    Route::get('admin/accounts/reset-password/{id}', 'Admin\UserController@resetPassword');
     Route::post('/admin/change-password', 'Admin\UserController@changePassword');
 });

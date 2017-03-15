@@ -49,6 +49,7 @@
             @endif
         @else
             @include('modal.confirmPayment')
+            @include('modal.confirmChangePassword')
         @endif
         @include('modal.changePassword')
         @include('modal.confirmDelete')

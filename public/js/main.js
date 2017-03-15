@@ -17,6 +17,10 @@ $(document).ready(function() {
         $(this).find('#order-refnum').text('• ' + $(e.relatedTarget).data('item-name'));
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
+    $('#confirm-changePassword').on('show.bs.modal', function(e) {
+        $(this).find('.admin-fullname').text($(e.relatedTarget).data('admin-name'));
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
 
     $('[data-toggle="popover"]').popover({
         html: true,

@@ -6,7 +6,7 @@
                 <h4 class="modal-title">{{ $id ? 'Edit Profile' : 'User Registration' }}</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ url('/register') }}" class="form-horizontal row">
+                <form method="POST" action="{{ url('/admin/edit-profile') }}" class="form-horizontal row">
                     <div class="col-md-offset-1 col-md-10">
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">Email</label>
@@ -40,7 +40,8 @@
                         <div class="form-group">
                             <div class="col-sm-12 text-center">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-sm btn-primary btn-block" type="submit">Register</button>
+                                <input type="hidden" name="id" value="{{ $id }}">
+                                <button class="btn btn-sm btn-primary btn-block" type="submit">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -49,13 +50,3 @@
         </div>
     </div>
 </div>
-
-@section('specificCustomJs')
-    @if(count($errors) > 0)
-        <script>
-            $(window).load(function(){
-                $('#registerModal').modal('show');
-            });
-        </script>
-    @endif
-@endsection
