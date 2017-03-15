@@ -33,4 +33,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class, 'order_id')->getResults();
     }
+
+    public function getProduct()
+    {
+        return Product::find($this->product_id);
+    }
 }

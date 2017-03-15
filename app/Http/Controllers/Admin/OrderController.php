@@ -89,6 +89,14 @@ class OrderController extends BaseController
 
             $order->status = $newStatus;
             $order->save();
+
+            if ($order->isCompleted()) {
+                foreach ($order->getItems() as $orderItem) {
+                    $product = $orderItem->getProduct();
+                    $product->stocks_left -= $orderItem->quantity;
+                    $product->save();
+                }
+            }
             $message = array('success' => 'Order #'.$order->getReferenceNumber().' has been successfully updated');
             DB::commit();
         } catch (\Exception $e) {

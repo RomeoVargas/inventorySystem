@@ -36,7 +36,7 @@
 
                 @foreach($orders as $order)
                     <tr class="{{ $order->getViewClass() }}">
-                        <td>{{ $order->getReferenceNumber() }}</td>
+                        <td><a data-toggle="modal" data-target="#orderDetailsModal{{$order->getReferenceNumber()}}">{{ $order->getReferenceNumber() }}</a></td>
                         <td>{{ to_time_format($order->created_at, 'F d, Y') }}</td>
                         <td>
                             {{ $statuses[$order->status] }}
@@ -57,7 +57,21 @@
         </div>
     @else
         <div class="col-md-offset-1 col-md-10">
-            <div class="alert alert-warning">You have not ordered anything yet</div>
+            <div class="alert alert-warning"><strong>You have not ordered anything yet</strong></div>
         </div>
     @endif
+@endsection
+@section('modal')
+    @foreach($orders as $order)
+        @php
+            $id = $order->id;
+            $refNum = $order->getReferenceNumber();
+            $orderItems = $order->getItems();
+            $status = \App\Order::$statuses[$order->status];
+            $totalPrice = $order->getTotalPrice();
+            $address = $order->delivery_address;
+            $viewClass = $order->getViewClass();
+        @endphp
+        @include('modal.orderDetails')
+    @endforeach
 @endsection

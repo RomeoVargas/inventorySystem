@@ -39,17 +39,17 @@
                                 <tr class="{{ $order->getViewClass() }}">
                                     <td>{{ to_time_format($order->created_at, 'F d, Y') }}</td>
                                     <td>{{ $order->getUser()->getFullName() }}</td>
-                                    <td>{{ $order->getReferenceNumber() }}</td>
+                                    <td><a data-toggle="modal" data-target="#orderDetailsModal{{$order->getReferenceNumber()}}">{{ $order->getReferenceNumber() }}</a></td>
                                     <td>
                                         {{ $statuses[$order->status] }}
                                         @if($order->isForDeliver())
                                             <div class="col-sm-12">
-                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => true]) }}"
+                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => 1]) }}"
                                                    data-action="paid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
                                                    data-target="#confirm-payment" class="btn btn-sm btn-success">
                                                     <i class="glyphicon glyphicon-check"></i> Paid
                                                 </a>
-                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => false]) }}"
+                                                <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => 0]) }}"
                                                    data-action="unpaid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
                                                    data-target="#confirm-payment" class="btn btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-remove"></i> Unpaid
@@ -92,8 +92,14 @@
         @php
             $id = $order->id;
             $refNum = $order->getReferenceNumber();
+            $orderItems = $order->getItems();
+            $status = \App\Order::$statuses[$order->status];
+            $totalPrice = $order->getTotalPrice();
+            $address = $order->delivery_address;
+            $viewClass = $order->getViewClass();
         @endphp
         @include('admin.modal.setDeliveryDate')
+        @include('modal.orderDetails')
     @endforeach
 @endsection
 
