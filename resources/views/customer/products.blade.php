@@ -16,14 +16,18 @@
                     <div class="product-item">
                         <div class="col-sm-12">{{ $product->name }}</div>
                         <img class="product-image" src="{{ $product->getImage() }}">
-                        <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
-                        <div class="price col-sm-12 text-right">{{ number_format($product->stocks_left) }} in stock</div>
+                        @if($user = \Illuminate\Support\Facades\Auth::user())
+                            <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
+                            <div class="price col-sm-12 text-right">{{ number_format($product->stocks_left) }} in stock</div>
+                        @endif
                         <div class="col-sm-12">{{ $product->description }}</div>
-                        <div class="col-sm-12 text-right">
-                            <a data-toggle="modal" data-target="#addToCartModal{{$product->id}}" class="btn btn-sm btn-info">
-                                Add to cart <i class="glyphicon glyphicon-shopping-cart"></i>
-                            </a>
-                        </div>
+                        @if($user)
+                            <div class="col-sm-12 text-right">
+                                <a data-toggle="modal" data-target="#addToCartModal{{$product->id}}" class="btn btn-sm btn-info">
+                                    Add to cart <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             @else
