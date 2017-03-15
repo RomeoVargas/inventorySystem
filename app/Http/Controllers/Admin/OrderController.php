@@ -93,7 +93,7 @@ class OrderController extends BaseController
             if ($order->isCompleted()) {
                 foreach ($order->getItems() as $orderItem) {
                     $product = $orderItem->getProduct();
-                    $product->stocks_left -= $orderItem->quantity;
+                    $product->stocks_left = min(0, $product->stocks_left - $orderItem->quantity);
                     $product->save();
                 }
             }

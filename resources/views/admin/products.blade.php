@@ -58,7 +58,7 @@
         $name = null;
         $image = null;
         $price = null;
-        $stocks = null;
+        $stocks = 0;
         $description = null;
     @endphp
     @include('admin.modal.addProduct')
