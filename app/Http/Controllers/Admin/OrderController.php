@@ -38,6 +38,7 @@ class OrderController extends BaseController
     {
         DB::beginTransaction();
         try {
+            $orderId = $request->get('id');
             $dayYesterday = Carbon::yesterday();
             $validator = Validator::make(
                 $request->all(),
@@ -45,11 +46,18 @@ class OrderController extends BaseController
             );
             if ($validator->fails()) {
                 return $this->redirectTo('order/list')
-                    ->with(['orderId' => $request->get('id')])
+                    ->with(['orderId' => $orderId])
                     ->withErrors($validator)
                     ->withInput();
             }
 
+            if (!$order = Order::find($orderId)) {
+                throw new ModelNotFoundException('Order does not exist');
+            }
+
+            $order->status = Order::STATUS_FOR_DELIVER;
+            $order->date_delivered = to_time_format($request->get('deliveryDate'), 'Y-m-d H:i:s');
+            $order->save();
             $message = array('success' => 'Your order has been successfully submitted');
             DB::commit();
         } catch (\Exception $e) {
@@ -62,7 +70,7 @@ class OrderController extends BaseController
         return $this->redirectTo('order/list')->with($message);
     }
 
-    public function approvePayment($refNum, $isPaid = true)
+    public function approvePayment($refNum, $isPaid = false)
     {
         DB::beginTransaction();
         try {

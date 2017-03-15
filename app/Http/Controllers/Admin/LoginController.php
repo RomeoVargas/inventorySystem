@@ -11,22 +11,24 @@ class LoginController extends BaseController
 {
     public function authenticate(Request $request)
     {
+        $urlTo = 'home';
         $message = array();
         if (!Session::get('admin')) {
             $email = $request->get('email');
             $password = $request->get('password');
 
-            $user = UserService::authenticate($email, $password, User::AUTH_TYPE_ADMIN);
-            $message = array(
-                'loginError' => 'Invalid email/password'
-            );
-
-            if ($user) {
-                Session::set(['admin' => $user]);
+            $user = UserService::authenticate($email, $password, [User::AUTH_TYPE_ADMIN, User::AUTH_TYPE_SUPER_ADMIN]);
+            if (!$user) {
+                $message = array(
+                    'loginError' => 'Invalid email/password'
+                );
+                $urlTo = 'login';
             }
+
+            Session::set(['admin' => $user]);
         }
 
-        return $this->redirectTo('home')->with($message);
+        return $this->redirectTo($urlTo)->with($message);
     }
 
     public function logout()

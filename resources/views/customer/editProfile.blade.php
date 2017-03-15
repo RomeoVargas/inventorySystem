@@ -47,6 +47,3 @@
         </div>
     </form>
 @endsection
-@section('modal')
-    @include('customer.modal.changePassword')
-@endsection

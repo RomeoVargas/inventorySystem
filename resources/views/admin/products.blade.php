@@ -42,8 +42,10 @@
             @endif
         </div>
     @else
-        <div class="alert alert-warning">
-            <strong>There are no products added yet</strong>
+        <div class="col-md-offset-1 col-md-10">
+            <div class="alert alert-warning">
+                <strong>There are no products added yet</strong>
+            </div>
         </div>
     @endif
 

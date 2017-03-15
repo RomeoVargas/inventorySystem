@@ -50,6 +50,7 @@
         @else
             @include('modal.confirmPayment')
         @endif
+        @include('modal.changePassword')
         @include('modal.confirmDelete')
 
         <!-- JAVASCRIPT -->
@@ -60,5 +61,12 @@
 
         @yield('generalCustomJs')
         @yield('specificCustomJs')
+        @if(count($errors) > 0 && session('passwordUserId'))
+            <script>
+                $(window).load(function(){
+                    $('#changePassword').modal('show');
+                });
+            </script>
+        @endif
     </body>
 </html>

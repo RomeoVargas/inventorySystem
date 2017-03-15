@@ -33,7 +33,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url('admin/accounts') }}"><i class="glyphicon glyphicon-log-in"></i> Manage Accounts</a></li>
-                            <li><a href="{{ url('admin/edit-profile') }}"><i class="glyphicon glyphicon-user"></i> Update Profile</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#changePassword"><i class="glyphicon glyphicon-lock"></i> Change Password</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ url('admin/logout') }}"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                         </ul>
@@ -42,10 +42,6 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-@endsection
-
-@section('modal')
-    @include('customer.modal.register')
 @endsection
 
 @section('generalCustomJs')

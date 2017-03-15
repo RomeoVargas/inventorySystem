@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <strong>Confirm <strong class="payment-action" style="text-transform: capitalize;"></strong></strong>
+                <strong>Confirm Payment</strong>
             </div>
             <div class="modal-body">
                 <div class="col-sm-12">

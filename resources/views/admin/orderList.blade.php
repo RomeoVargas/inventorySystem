@@ -50,7 +50,7 @@
                                                     <i class="glyphicon glyphicon-check"></i> Paid
                                                 </a>
                                                 <a data-href="{{ url('admin/order/updatePayment', ['refnum' => $order->getReferenceNumber(), 'isPaid' => false]) }}"
-                                                   data-action="paid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
+                                                   data-action="unpaid" data-toggle="modal" data-item-name="Ref #{{ $order->getReferenceNumber() }}"
                                                    data-target="#confirm-payment" class="btn btn-sm btn-danger">
                                                     <i class="glyphicon glyphicon-remove"></i> Unpaid
                                                 </a>
@@ -77,7 +77,7 @@
                 </div>
             @else
                 <div class="col-md-offset-1 col-md-10">
-                    <div class="alert alert-warning">You have not ordered anything yet</div>
+                    <div class="alert alert-warning"><strong>There are no orders yet</strong></div>
                 </div>
             @endif
         </div>

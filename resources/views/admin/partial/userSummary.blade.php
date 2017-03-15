@@ -5,11 +5,11 @@
     <div class="panel-body">
         <ul class="list-group">
             <li class="list-group-item">
-                <span class="badge">14</span>
+                <span class="badge">{{ \App\User::getCountByType(\App\User::AUTH_TYPE_CUSTOMER) }}</span>
                 Registered Customers
             </li>
             <li class="list-group-item">
-                <span class="badge">1</span>
+                <span class="badge">{{ \App\User::getCountByType(\App\User::AUTH_TYPE_ADMIN) + 1 }}</span>
                 Admin Accounts
             </li>
         </ul>

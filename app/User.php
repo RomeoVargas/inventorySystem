@@ -11,6 +11,7 @@ class User extends Authenticatable
 
     const AUTH_TYPE_CUSTOMER    = 1;
     const AUTH_TYPE_ADMIN       = 2;
+    const AUTH_TYPE_SUPER_ADMIN = 500;
 
     const MAX_LENGTH_EMAIL = 50;
 
@@ -46,5 +47,10 @@ class User extends Authenticatable
     public function getFullName()
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    public static function getCountByType($type)
+    {
+        return self::query()->where('auth_type', '=', $type)->get()->count();
     }
 }

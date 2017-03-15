@@ -43,7 +43,7 @@ Route::group(['middleware' => 'loginRequired'], function() {
             'user' => \Illuminate\Support\Facades\Auth::user()
         ]);
     });
-    // Add to cart, update profile, view cart/orders page here
+    Route::post('/change-password', 'Customer\UserController@changePassword');
 });
 
 // ADMIN RELATED PAGES
@@ -80,4 +80,5 @@ Route::group(['middleware' => 'loginRequired'], function() {
     Route::get('/admin/accounts', function () {
         return view('admin.accounts');
     });
+    Route::post('/admin/change-password', 'Admin\UserController@changePassword');
 });
