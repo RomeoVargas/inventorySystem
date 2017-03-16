@@ -18,7 +18,6 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', Product::MAX_LENGTH_NAME)->unique();
             $table->integer('stocks_left');
-            $table->boolean('is_made_to_order')->default(false);
             $table->double('price');
             $table->string('description');
             $table->string('image_url')->nullable();

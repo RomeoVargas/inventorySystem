@@ -17,7 +17,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'stocks_left', 'price', 'description', 'image_url'
+        'name', 'stocks_left', 'is_made_to_order', 'price', 'description', 'image_url'
     ];
 
     public static function getNumNeedsRestock()
@@ -46,6 +46,6 @@ class Product extends Model
 
     public function isNeedsRestock()
     {
-        return $this->stocks_left <= self::RESTOCK_METER;
+        return $this->stocks_left <= self::RESTOCK_METER && !$this->is_made_to_order;
     }
 }

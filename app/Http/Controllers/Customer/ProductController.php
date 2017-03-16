@@ -21,12 +21,18 @@ class ProductController extends Controller
         }
 
         $numTotalProducts = Product::query()
-            ->where('stocks_left', '!=', 0)
+            ->where('is_made_to_order', '=', true)
+            ->orWhere([
+                ['is_made_to_order', '=', false],
+                ['stocks_left', '!=', 0]
+            ])
             ->get()
             ->count();
         $products = Product::query()
-            ->where([
-                ['name', 'like', '%'.$key.'%'],
+            ->where('name', 'like', '%'.$key.'%')
+            ->where('is_made_to_order', '=', true)
+            ->orWhere([
+                ['is_made_to_order', '=', false],
                 ['stocks_left', '!=', 0]
             ])
             ->orderBy('name', 'asc')

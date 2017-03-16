@@ -21,7 +21,13 @@
                         </div>
                         <img class="product-image" src="{{ $product->getImage() }}">
                         <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
-                        <div class="price col-sm-12 text-right">{{ number_format($product->stocks_left) }} in stock</div>
+                        <div class="price col-sm-12 text-right">
+                            @if($product->is_made_to_order)
+                                Made to order
+                            @else
+                                {{ number_format($product->stocks_left) }} in stock
+                            @endif
+                        </div>
                         <div class="col-sm-12">{{ $product->description }}</div>
                         <div class="col-sm-12 text-right">
                             <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProductModal{{$product->id}}">
