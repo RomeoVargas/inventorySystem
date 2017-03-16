@@ -48,7 +48,12 @@
                             <div class="form-group {{ $errors->has('stocks') ? 'has-error' : '' }}">
                                 <label class="col-sm-12 text-left">Stocks left</label>
                                 <div class="col-sm-12">
-                                    <input type="number" min=0 class="form-control" name="stocks" placeholder="How many are in stock?" value="{{ old('stocks') ?: $stocks }}">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="font-size: 0.8em">
+                                            <input type="checkbox" name="isMadeToOrder" {{ !$isMadeToOrder ?: 'checked' }}> Made to order?
+                                        </span>
+                                        <input type="number" min=0 class="form-control" name="stocks" placeholder="How many are in stock?" value="{{ old('stocks') ?: $stocks }}">
+                                    </div>
                                     {!! $errors->first('stocks', "<p class='help-block'>:message</p>") !!}
                                 </div>
                             </div>

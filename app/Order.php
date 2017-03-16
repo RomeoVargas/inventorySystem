@@ -81,6 +81,11 @@ class Order extends Model
         return $this->status == self::STATUS_UNPAID;
     }
 
+    public function isTransactionDone()
+    {
+        return $this->isCompleted() || $this->isCancelled() || $this->isUnpaid();
+    }
+
     public function getViewClass()
     {
         switch ($this->status) {

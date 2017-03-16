@@ -58,6 +58,7 @@
         $name = null;
         $image = null;
         $price = null;
+        $isMadeToOrder = false;
         $stocks = 0;
         $description = null;
     @endphp
@@ -68,6 +69,7 @@
             $name = $product->name;
             $image = $product->getImage();
             $price = $product->price;
+            $isMadeToOrder = (bool) $product->is_made_to_order;
             $stocks = $product->stocks_left;
             $description = $product->description;
         @endphp

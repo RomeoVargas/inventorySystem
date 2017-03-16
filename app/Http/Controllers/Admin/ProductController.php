@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Cart;
+use App\OrderItem;
 use App\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -66,6 +68,7 @@ class ProductController extends BaseController
             $product->fill([
                 'name' => $request->get('name'),
                 'price' => $request->get('price'),
+                'is_made_to_order' => (bool) $request->get('isMadeToOrder'),
                 'stocks_left' => $request->get('stocks'),
                 'description' => $request->get('description')
             ])->save();
@@ -103,6 +106,23 @@ class ProductController extends BaseController
             if (!$product) {
                 throw new ModelNotFoundException('Product does not exist');
             }
+            $cantDeleteProduct = false;
+            $orders = array();
+            $orderItems = OrderItem::query()->where('product_id', '=', $id)->get();
+            foreach ($orderItems as $orderItem) {
+                if (!isset($orders[$orderItem->order_id])) {
+                    $orders[$orderItem->order_id] = $orderItem->getOrder();
+                }
+                if (!$orderItem->getOrder()->isTransactionDone()) {
+                    $cantDeleteProduct = true;
+                }
+            }
+
+            $cartItems = Cart::query()->where('product_id', '=', $id)->get();
+            if ($cantDeleteProduct || $cartItems->count()) {
+                throw new \Exception('Cannot delete '.$product->name.'. Someone has it in their cart or is currently processed in an order');
+            }
+
             $message = array(
                 'success' => 'Product "'.$product->name.'" has been successfully deleted'
             );
