@@ -34,7 +34,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 text-left">Stocks left</label>
-                                    <div class="col-sm-12">{{ number_format($stocks) }}</div>
+                                    <div class="col-sm-12">
+                                        @if(!$madeToOrder)
+                                            {{ number_format($stocks) }}
+                                        @else
+                                            Made to order
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('quantity') ? 'has-error' : '' }}">

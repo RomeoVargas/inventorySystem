@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Notification;
 use App\Order;
 use App\OrderItem;
 use Carbon\Carbon;
@@ -77,6 +78,16 @@ class OrderController extends Controller
             }
 
             $message = array('success' => 'Your order has been successfully submitted');
+            $dateToday = Carbon::now()->toDateString();
+            $notification = new Notification();
+            $notification->fill([
+                'type' => Notification::TYPE_NEW_ORDER,
+                'content' => $user->getFullName() . ' just placed a new order',
+                'link' => sprintf(
+                    'order/list?dateFrom=%s&dateTo=%s&status=%s',
+                    $dateToday, $dateToday, Order::STATUS_NEW
+                )
+            ])->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -107,6 +118,17 @@ class OrderController extends Controller
             $order->status = Order::STATUS_CANCELLED;
             $order->save();
             $message = array('success' => 'Your order has been successfully cancelled');
+
+            $dateToday = Carbon::now()->toDateString();
+            $notification = new Notification();
+            $notification->fill([
+                'type' => Notification::TYPE_CANCELLED_ORDER,
+                'content' => $order->getUser()->getFullName() . ' just cancelled an order',
+                'link' => sprintf(
+                    'order/list?dateFrom=%s&dateTo=%s&status=%s',
+                    $dateToday, $dateToday, Order::STATUS_CANCELLED
+                )
+            ])->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

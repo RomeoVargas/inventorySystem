@@ -23,7 +23,10 @@ class Product extends Model
     public static function getNumNeedsRestock()
     {
         return self::query()
-            ->where('stocks_left', '<=', self::RESTOCK_METER)
+            ->where([
+                ['is_made_to_order', '=', false],
+                ['stocks_left', '<=', self::RESTOCK_METER]
+            ])
             ->get()
             ->count();
     }

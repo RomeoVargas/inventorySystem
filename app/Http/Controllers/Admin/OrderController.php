@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notification;
 use App\Order;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -22,6 +23,28 @@ class OrderController extends BaseController
         if (strtotime($dateTo) < strtotime($dateFrom)) {
             session()->flash('error', 'End date must be a later date');
             $dateTo = $dateFrom;
+        }
+
+        DB::beginTransaction();
+        try {
+            if (!$status || $status == Order::STATUS_NEW) {
+                $notifications = Notification::getUnreadByDateRange($dateFrom, $dateTo, Notification::TYPE_NEW_ORDER);
+                foreach ($notifications as $notification) {
+                    $notification->is_read = true;
+                    $notification->save();
+                }
+            }
+            if (!$status || $status == Order::STATUS_CANCELLED) {
+                $notifications = Notification::getUnreadByDateRange($dateFrom, $dateTo, Notification::TYPE_CANCELLED_ORDER);
+                foreach ($notifications as $notification) {
+                    $notification->is_read = true;
+                    $notification->save();
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session('error', $e->getMessage());
         }
 
         return view('admin.orderList')->with([

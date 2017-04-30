@@ -51,6 +51,7 @@
             $price = $product->price;
             $stocks = $product->stocks_left;
             $description = $product->description;
+            $madeToOrder = $product->is_made_to_order;
         @endphp
         @include('customer.modal.addToCart')
     @endforeach

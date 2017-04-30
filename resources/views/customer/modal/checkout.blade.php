@@ -1,3 +1,4 @@
+@php($user = \Illuminate\Support\Facades\Auth::user())
 <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkout">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -41,7 +42,7 @@
                             <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                                 <label class="col-sm-12 text-left">Delivery address</label>
                                 <div class="col-sm-12">
-                                    <textarea class="form-control" rows="3" style="resize:none" name="address">{{ old('address') }}</textarea>
+                                    <textarea class="form-control" rows="3" style="resize:none" name="address">{{ old('address') ?: $user->address }}</textarea>
                                     {!! $errors->first('address', "<p class='help-block'>:message</p>") !!}
                                 </div>
                             </div>

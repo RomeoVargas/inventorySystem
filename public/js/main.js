@@ -141,4 +141,14 @@ $(document).ready(function() {
             .not(':button, :submit, :reset, :hidden')
             .val('');
     });
+
+    $('.collapsable').click(function(){
+        var $this = $(this);
+        $this.toggleClass('textDisplayed');
+        if($this.hasClass('textDisplayed')){
+            $this.text('Hide details');
+        } else {
+            $this.text('See more');
+        }
+    });
 });

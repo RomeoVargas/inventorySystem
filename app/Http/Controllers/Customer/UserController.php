@@ -20,7 +20,7 @@ class UserController extends Controller
                 'email'         => 'required|max:255|email|unique:users,email,'.$user->id,
                 'firstName'     => 'required|min:1|max:50',
                 'lastName'      => 'required|min:1|max:50',
-                'contactNumber' => 'required|digits_between:7,10',
+                'contactNumber' => 'required|digits_between:7,11',
                 'address'       => 'required'
             );
 

@@ -1,8 +1,11 @@
 body {
     font-family: "Arial";
-    background: url("../../img/customer-bg.jpg");
-    background-size: 20%;
-    background-repeat: repeat;
+    height: 100vh;
+    background: white; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(white, darkorange); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white, darkorange); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white, darkorange); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(white, darkorange); /* Standard syntax */
 }
 
 td {
@@ -21,7 +24,7 @@ td {
 }
 
 .carousel .item img {
-    height: 80vh;
+    height: 50vh;
     margin: 0 auto;
 }
 
@@ -104,4 +107,19 @@ td {
     right: 2%;
     border-radius: 50%;
     font-size: 15vh;
+}
+
+.sideInfo-title {
+    color: orange;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.sideInfo-item {
+    color: white;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height:40vh;
+    overflow:scroll;
 }

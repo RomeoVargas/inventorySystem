@@ -1,7 +1,4 @@
 @extends('layout.main')
-@section('pageTitle')
-    COMPANY PROFILE
-@endsection
 
 @section('content')
     <div class="row">
@@ -36,11 +33,6 @@
                 <li>Supply of Safety Helmet, Safety Shoes and other Safety Products.</li>
                 <li>Supply of Emergency Light, Fire Exit Light and Smoke Detector</li>
             </ul>
-
-            May we therefore take this opportunity to request for an accreditation
-            and be a regular supplier  for all your Fire Protection needs.
-            enclose herewith are the pertinent necessary papers for your evaluation.
-            Thank you very much we are looking for a new business relationship with your company.
         </div>
         <div class="col-md-5">
           <img src="{{ asset('img/contactUs.png') }}">

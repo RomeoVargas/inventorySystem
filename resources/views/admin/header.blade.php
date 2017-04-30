@@ -24,6 +24,34 @@
                     <li class="{{ trim($routeName, '/') == 'admin/products' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/products') }}">Products</a>
                     </li>
+                    <li class="dropdown">
+                        @php
+                            $notifications = \App\Notification::getAllUnread();
+                            $numNeedsRestock = \App\Product::getNumNeedsRestock();
+                            $totalNumNotifs = $notifications->count() + $numNeedsRestock;
+                        @endphp
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Notifications
+                            <span class="badge">{{ $totalNumNotifs }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if($totalNumNotifs)
+                                @foreach($notifications as $notification)
+                                    <li><a href="{{ url('admin/'.$notification->link) }}">{{ $notification->content }}</a></li>
+                                @endforeach
+                                @if($numNeedsRestock)
+                                        <li>
+                                            <a href="{{ url('admin/products') }}">
+                                                <span class="badge">{{ $numNeedsRestock }}</span>
+                                                Needs Re-stock
+                                            </a>
+                                        </li>
+                                @endif
+                            @else
+                                <li><a href="#">There are no notifications</a></li>
+                            @endif
+                        </ul>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

@@ -18,7 +18,13 @@
                         <img class="product-image" src="{{ $product->getImage() }}">
                         @if($user = \Illuminate\Support\Facades\Auth::user())
                             <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
-                            <div class="price col-sm-12 text-right">{{ number_format($product->stocks_left) }} in stock</div>
+                            <div class="price col-sm-12 text-right">
+                                @if(!$product->is_made_to_order)
+                                    {{ number_format($product->stocks_left) }} in stock
+                                @else
+                                    Made to order
+                                @endif
+                            </div>
                         @endif
                         <div class="col-sm-12">{{ $product->description }}</div>
                         @if($user)
@@ -57,6 +63,7 @@
             $price = $product->price;
             $stocks = $product->stocks_left;
             $description = $product->description;
+            $madeToOrder = $product->is_made_to_order;
         @endphp
         @include('customer.modal.addToCart')
     @endforeach

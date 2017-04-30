@@ -37,9 +37,14 @@ class CartController extends Controller
                 throw new ModelNotFoundException('Product does not exist');
             }
 
+            $quantityCondition = 'required|min:1|max:'.$product->stocks_left.'|numeric';
+            if ($product->is_made_to_order) {
+                $quantityCondition = 'required|min:1|numeric';
+            }
+
             $validator = Validator::make(
                 $request->all(),
-                ['quantity' => 'required|min:1|max:'.$product->stocks_left.'|numeric']
+                ['quantity' => $quantityCondition]
             );
             if ($validator->fails()) {
                 return redirect($request->get('urlFrom', 'cart'))
