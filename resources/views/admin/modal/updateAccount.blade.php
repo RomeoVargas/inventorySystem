@@ -31,7 +31,7 @@
                         <div class="form-group {{ $errors->has('contactNumber') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">Contact #</label>
                             <div class="col-sm-10">
-                                <input type="tel" class="form-control" name="contactNumber" placeholder="eg.: 9123456789" value="{{ old('contactNumber') ?: $contactNumber }}">
+                                <input type="tel" class="form-control" name="contactNumber" placeholder="Active contact number of admin" value="{{ old('contactNumber') ?: $contactNumber }}">
                             </div>
                             {!! $errors->first('contactNumber', '<p class="help-block col-sm-offset-2 col-sm-10">:message</p>') !!}
                         </div>

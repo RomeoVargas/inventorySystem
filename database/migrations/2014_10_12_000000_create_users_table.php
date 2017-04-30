@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
         // Insert some stuff
         DB::table('users')->insert(
             array(
-                'email'             => 'admin@admin.com',
+                'email'             => 'checon_industry@yahoo.com',
                 'auth_type'         => User::AUTH_TYPE_SUPER_ADMIN,
                 'password'          => md5('password123123'),
                 'first_name'        => 'admin',

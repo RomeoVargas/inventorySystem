@@ -21,6 +21,10 @@ $(document).ready(function() {
         $(this).find('.admin-fullname').text($(e.relatedTarget).data('admin-name'));
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
+    $('#confirm-activateUser').on('show.bs.modal', function(e) {
+        $(this).find('.customer-fullname').text($(e.relatedTarget).data('customer-name'));
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
 
     $('[data-toggle="popover"]').popover({
         html: true,

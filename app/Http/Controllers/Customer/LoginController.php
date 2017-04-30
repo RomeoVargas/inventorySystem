@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Notification;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
@@ -56,19 +57,33 @@ class LoginController extends Controller
             'firstName'             => 'required|min:1|max:50',
             'lastName'              => 'required|min:1|max:50',
             'contactNumber'         => 'required|digits_between:7,10',
-            'address'               => 'required'
+            'address'               => 'required',
+            'company'               => 'min:0|max:50'
         ]);
 
         $user = new User();
-        $user->email = $request->get('email');
-        $user->password = md5($request->get('password'));
-        $user->auth_type = User::AUTH_TYPE_CUSTOMER;
-        $user->first_name = $request->get('firstName');
-        $user->last_name = $request->get('lastName');
-        $user->contact_number = $request->get('contactNumber');
-        $user->address = $request->get('address');
-        $user->save();
+        $user->fill([
+            'email'             => $request->get('email'),
+            'password'          => md5($request->get('password')),
+            'auth_type'         => User::AUTH_TYPE_CUSTOMER,
+            'first_name'        => $request->get('firstName'),
+            'last_name'         => $request->get('lastName'),
+            'contact_number'    => $request->get('contactNumber'),
+            'address'           => $request->get('address'),
+            'company'           => $request->get('company')
+        ])->save();
 
-        return redirect('/home')->with('success', 'You are now successfully registered. You can now log in!');
+        $notifMessage = ($user->company)
+            ? $user->getFullName() . ' have registered an account for '.$user->company
+            : $user->getFullName() . ' have registered an individual account';
+
+        $notification = new Notification();
+        $notification->fill([
+            'type' => Notification::TYPE_NEW_CUSTOMER,
+            'content' => $notifMessage,
+            'link' => 'accounts?forCustomers=1'
+        ])->save();
+
+        return redirect('/home')->with('success', 'Your account has been submitted for assessment! You will receive an email if your account is ready for login');
     }
 }

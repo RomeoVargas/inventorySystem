@@ -10,7 +10,8 @@ class UserService
     {
         $userQuery = User::query()->where([
                 ['email', '=', $email],
-                ['password', '=', md5($password)]
+                ['password', '=', md5($password)],
+                ['is_active', '=', true]
         ]);
         if (is_array($authType)) {
             $userQuery->whereIn('auth_type', $authType);

@@ -9,18 +9,16 @@
     background: linear-gradient(red, orange); /* Standard syntax */
     width:100%; text-align:center; box-sizing: border-box;
     padding:2em 1em 1em; border-radius:20px 20px 0 0; margin-top:1em;">
-    <h1 style="color:white; margin-top:0;">Checon Industries: Login Credentials</h1>
+    <h1 style="color:white; margin-top:0;">Checon Industries: Account Activated</h1>
 </div>
 <div style="width:100%; border:1px solid orange; padding:2em 3em; box-sizing: border-box; color:#5e5e5e;
         text-align:justify;">
-    <strong style="font-size: 14px;">
-        Enlisted below are your account credentials for Checon Industries'
-        Content Management System(CMS)
-    </strong>
-    <div style="margin-top:3em; text-align:center;">
-        Email: <strong>{{ $email }}</strong> <br />
-        Password: <strong>{{ $password }}</strong> <br />
-    </div>
+    <p>Hello there {{ $user->first_name }}! This email is sent to inform you that your registration for a
+        checon customer account is successful</p>
+    <p>After thorough checking, the administrator has decided to acknowledge and activate your account.
+        You can now login your account using your registered email <strong>{{ $user->email }}</strong></p>
+    <br/>
+    <p>Have a nice day</p>
 </div>
 </body>
 </html>

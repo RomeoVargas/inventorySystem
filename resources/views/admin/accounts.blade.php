@@ -1,4 +1,8 @@
 @extends('layout.main')
+@section('pageTitle')
+    Admin Accounts
+@endsection
+
 @section('content')
     <div class="col-md-12">
         <div class="col-sm-9">
@@ -35,7 +39,7 @@
                                         <i class="glyphicon glyphicon-lock"></i>
                                         Reset Password
                                     </a>
-                                    <a data-href="{{ url('admin/accounts/delete', ['id' => $user->id]) }}"
+                                    <a data-href="{{ url('admin/accounts/delete', ['isCustomer' => 0, 'id' => $user->id]) }}"
                                        data-toggle="modal" data-item-type="admin" data-item-name="{{ $user->getFullName() }}"
                                        data-target="#confirm-delete" class="btn btn-sm btn-danger">
                                         <i class="glyphicon glyphicon-remove"></i>

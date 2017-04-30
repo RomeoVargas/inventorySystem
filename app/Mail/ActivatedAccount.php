@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DeletedAccount extends Mailable
+class ActivatedAccount extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,12 +31,10 @@ class DeletedAccount extends Mailable
      */
     public function build()
     {
-        $subject = $this->user->isCustomer() ? 'Account Registration Denied' : 'ACCESS RIGHTS REMOVED';
-
-        return $this->view('email.deleted_account')->with([
+        return $this->view('email.activated_account')->with([
                 'user' => $this->user
             ])
             ->from(env('MAIL_USERNAME'), 'Checon Industries')
-            ->subject($subject);
+            ->subject('Checon Account Activated');
     }
 }

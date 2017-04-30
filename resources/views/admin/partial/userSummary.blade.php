@@ -6,11 +6,15 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <span class="badge">{{ \App\User::getCountByType(\App\User::AUTH_TYPE_CUSTOMER) }}</span>
-                Registered Customers
+                <a href="{{ url('admin/accounts?forCustomers=1') }}">
+                    Registered Customers
+                </a>
             </li>
             <li class="list-group-item">
                 <span class="badge">{{ \App\User::getCountByType(\App\User::AUTH_TYPE_ADMIN) + 1 }}</span>
-                Admin Accounts
+                <a href="{{ url('admin/accounts') }}">
+                    Admin Accounts
+                </a>
             </li>
         </ul>
     </div>

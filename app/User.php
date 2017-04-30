@@ -22,7 +22,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email', 'password', 'auth_type',
-        'first_name', 'last_name', 'contact_number', 'address'
+        'first_name', 'last_name', 'contact_number', 'address', 'company', 'is_active'
     ];
 
     /**
@@ -57,5 +57,15 @@ class User extends Authenticatable
     public function isSuperAdmin()
     {
         return $this->auth_type == self::AUTH_TYPE_SUPER_ADMIN;
+    }
+
+    public function isCustomer()
+    {
+        return $this->auth_type == self::AUTH_TYPE_CUSTOMER;
+    }
+
+    public function isAdmin()
+    {
+        return $this->auth_type == self::AUTH_TYPE_ADMIN;
     }
 }

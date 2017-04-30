@@ -81,7 +81,8 @@ Route::group(['middleware' => 'loginRequired'], function() {
     Route::post('/admin/order/setDelivery', 'Admin\OrderController@setDeliveryDate');
     Route::get('/admin/order/updatePayment/{refnum}/{isPaid}', 'Admin\OrderController@approvePayment');
     Route::get('/admin/accounts', 'Admin\UserController@index');
-    Route::get('admin/accounts/delete/{id}', 'Admin\UserController@delete');
+    Route::get('/admin/accounts/activate/{id}', 'Admin\UserController@activateCustomer');
+    Route::get('admin/accounts/delete/{isCustomer}/{id}', 'Admin\UserController@delete');
     Route::get('admin/accounts/reset-password/{id}', 'Admin\UserController@resetPassword');
     Route::post('/admin/change-password', 'Admin\UserController@changePassword');
 });

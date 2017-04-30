@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-    <form method="POST" action="{{ url('/register') }}" class="form-horizontal row">
+    <form method="POST" class="form-horizontal row">
         <div class="col-md-offset-1 col-md-10">
             <h1>Edit Profile</h1>
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
@@ -27,16 +27,23 @@
             <div class="form-group {{ $errors->has('contactNumber') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label">Contact #</label>
                 <div class="col-sm-8">
-                    <input type="tel" class="form-control" name="contactNumber" placeholder="eg.: 9123456789" value="{{ $user->contact_number }}">
+                    <input type="tel" class="form-control" name="contactNumber" placeholder="Can be mobile or landline number" value="{{ $user->contact_number }}">
                 </div>
                 {!! $errors->first('contactNumber', '<p class="help-block col-sm-offset-2 col-sm-10">:message</p>') !!}
             </div>
             <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" name="address" placeholder="Complete Adress" value="{{ $user->address }}">
+                    <input type="text" class="form-control" name="address" placeholder="Company address, if account is affiliated to a company" value="{{ $user->address }}">
                 </div>
                 {!! $errors->first('address', '<p class="help-block col-sm-offset-2 col-sm-10">:message</p>') !!}
+            </div>
+            <div class="form-group {{ $errors->has('company') ? 'has-error' : '' }}">
+                <label class="col-sm-2 control-label">Company</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="company" placeholder="Leave this blank if account is for personal use" value="{{ $user->company }}">
+                </div>
+                {!! $errors->first('company', '<p class="help-block col-sm-offset-2 col-sm-10">:message</p>') !!}
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-8 text-center">

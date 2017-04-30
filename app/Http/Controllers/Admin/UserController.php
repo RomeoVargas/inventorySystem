@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Mail\AccountCredentials;
+use App\Mail\ActivatedAccount;
 use App\Mail\DeletedAccount;
+use App\Notification;
 use App\Services\Session;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -36,6 +38,30 @@ class UserController extends BaseController
         return Validator::make($request->all(), $rules);
     }
 
+    public function activateCustomer($id)
+    {
+        DB::beginTransaction();
+        try {
+            if ((!$user = User::find($id)) || !$user->isCustomer() || $user->is_active) {
+                throw new ModelNotFoundException('Cannot find inactive customer');
+            }
+
+            $user->is_active = true;
+            $user->save();
+
+            $message = array('success' => 'The account of '.$user->getFullName().' has been successfully activated');
+            Mail::to($user->email)->send(new ActivatedAccount($user));
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'error' => $e->getMessage()
+            );
+        }
+
+        return $this->redirectTo('accounts?forCustomers=1')->with($message);
+    }
+
     public function update(Request $request)
     {
         DB::beginTransaction();
@@ -51,10 +77,11 @@ class UserController extends BaseController
             }
 
             $email = $request->get('email');
-            if (!$admin->id) {
+            if (!$isExisting = $admin->id) {
                 $newPassword = substr(strtoupper(md5(str_random(self::INIT_PASSWORD_LENGTH))), -self::INIT_PASSWORD_LENGTH);
                 $admin->password = md5($newPassword);
                 $admin->auth_type = User::AUTH_TYPE_ADMIN;
+                $admin->is_active = true;
                 Mail::to($email)->send(new AccountCredentials($email, $newPassword));
             }
 
@@ -66,7 +93,7 @@ class UserController extends BaseController
                 'address'           => ''
             ])->save();
 
-            $message = array('success' => 'Your profile has been updated');
+            $message = array('success' => ($isExisting) ? 'Your profile has been updated' : 'Admin account has been successfully created');
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -117,23 +144,41 @@ class UserController extends BaseController
         return $this->redirectTo($request->get('urlFrom'))->with($message);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $admin = Session::get('admin');
-        $users = User::query()
-            ->whereIn('auth_type', [User::AUTH_TYPE_ADMIN, User::AUTH_TYPE_SUPER_ADMIN])
-            ->where('id', '!=', $admin->id)
-            ->orderBy('auth_type', 'desc')
-            ->get();
+        $forCustomers = $request->get('forCustomers', false);
+        $renderedPage = ($forCustomers) ? 'admin.customers' : 'admin.accounts';
 
-        return view('admin.accounts')->with([
+        $userQuery = User::query();
+        if ($forCustomers) {
+            $userQuery
+                ->where('auth_type', '=', User::AUTH_TYPE_CUSTOMER)
+                ->orderBy('created_at', 'desc');
+
+            $notifications = Notification::getUnreadByType([Notification::TYPE_NEW_CUSTOMER, Notification::TYPE_NEW_CUSTOMER_AFFILIATION]);
+            foreach ($notifications as $notification) {
+                $notification->is_read = true;
+                $notification->save();
+            }
+        } else {
+            $userQuery
+                ->whereIn('auth_type', [User::AUTH_TYPE_ADMIN, User::AUTH_TYPE_SUPER_ADMIN])
+                ->where('id', '!=', $admin->id)
+                ->orderBy('auth_type', 'desc');
+        }
+
+        $users = $userQuery->get();
+
+        return view($renderedPage)->with([
             'users' => $users,
             'admin' => $admin
         ]);
     }
 
-    public function delete($id)
+    public function delete($isCustomer, $id)
     {
+        $redirectTo = $isCustomer ? 'accounts?forCustomers=1' : 'accounts';
         DB::beginTransaction();
         try {
             $admin = Session::get('admin');
@@ -141,12 +186,16 @@ class UserController extends BaseController
                 throw new AccessDeniedHttpException('You are now allowed to do this action');
             }
 
-            if ((!$user = User::find($id)) || $user->auth_type == User::AUTH_TYPE_CUSTOMER) {
-                throw new ModelNotFoundException('Admin does not exist');
+            if ((!$user = User::find($id)) || $isCustomer && !$user->isCustomer() || !$isCustomer && !$user->isAdmin()) {
+                throw new ModelNotFoundException('User does not exist');
             }
 
-            $message = array('success' => 'Admin '.$user->getFullName().' has been successfully deleted');
-            Mail::to($user->email)->send(new DeletedAccount());
+            if ($isCustomer && $user->is_active) {
+                throw new AccessDeniedHttpException('Cannot delete an active account');
+            }
+
+            $message = array('success' => 'The account of '.$user->getFullName().' has been successfully deleted');
+            Mail::to($user->email)->send(new DeletedAccount($user));
             $user->delete();
             DB::commit();
         } catch (\Exception $e) {
@@ -156,7 +205,7 @@ class UserController extends BaseController
             );
         }
 
-        return $this->redirectTo('accounts')->with($message);
+        return $this->redirectTo($redirectTo)->with($message);
     }
 
     public function resetPassword($id)

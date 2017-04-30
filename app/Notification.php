@@ -9,6 +9,7 @@ class Notification extends Model
     const TYPE_NEW_ORDER = 1;
     const TYPE_CANCELLED_ORDER = 2;
     const TYPE_NEW_CUSTOMER = 3;
+    const TYPE_NEW_CUSTOMER_AFFILIATION = 4;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +29,24 @@ class Notification extends Model
                 ['created_at', '>=', to_time_format($dateFrom, 'Y-m-d 00:00:00')],
                 ['created_at', '<=', to_time_format($dateTo, 'Y-m-d 23:59:59')],
             ])->get();
+    }
+
+    public static function getUnreadByType($type)
+    {
+        if (is_array($type)) {
+            $notifications = self::query()
+                ->whereIn('type', $type)
+                ->where('is_read', '=', false)
+                ->get();
+        } else {
+            $notifications = self::query()
+                ->where([
+                    ['is_read', '=', false],
+                    ['type', '=', $type],
+                ])->get();
+        }
+
+        return $notifications;
     }
 
     public static function getAllUnread()
