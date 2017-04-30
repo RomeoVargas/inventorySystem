@@ -1,3 +1,5 @@
+@php($user = \Illuminate\Support\Facades\Auth::user())
+
 <div class="modal fade" id="addToCartModal{{$id}}" tabindex="-1" role="dialog" aria-labelledby="addToCart">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,53 +22,59 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-offset-1 col-sm-7 text-left">
-                            <div class="form-group">
+                        <div class="col-sm-8 text-left">
+                            <div class="form-group col-sm-12">
                                 <label class="col-sm-12 text-left">Name</label>
                                 <div class="col-sm-12">{{ $name }}</div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 text-left">Price</label>
-                                    <div class="col-sm-12">₱ {{ number_format($price) }}</div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-12 text-left">Price</label>
+                                <div class="col-sm-12">₱ {{ number_format($price) }}</div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-12 text-left">Stocks left</label>
+                                <div class="col-sm-12">
+                                    @if(!$madeToOrder)
+                                        {{ number_format($stocks) }}
+                                    @else
+                                        Made to order
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 text-left">Stocks left</label>
+                            @if($user)
+                                <div class="form-group col-sm-12 {{ $errors->has('quantity') ? 'has-error' : '' }}">
+                                    <label class="col-sm-12 text-left">Quantity</label>
                                     <div class="col-sm-12">
-                                        @if(!$madeToOrder)
-                                            {{ number_format($stocks) }}
-                                        @else
-                                            Made to order
-                                        @endif
+                                        <input type="number" min=0 class="form-control" name="quantity" placeholder="How many will you order?" value="{{ old('quantity') ?: $quantity }}">
+                                        {!! $errors->first('quantity', "<p class='help-block'>:message</p>") !!}
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group {{ $errors->has('quantity') ? 'has-error' : '' }}">
-                                <label class="col-sm-12 text-left">Quantity</label>
-                                <div class="col-sm-12">
-                                    <input type="number" min=0 class="form-control" name="quantity" placeholder="How many will you order?" value="{{ old('quantity') ?: $quantity }}">
-                                    {!! $errors->first('quantity', "<p class='help-block'>:message</p>") !!}
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-12 text-left">Description</label>
+                                    <div class="col-sm-12">{{ $description }}</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-12 text-left">Description</label>
-                                <div class="col-sm-12">{{ $description }}</div>
+                            @else
+                                <div class="form-group col-sm-12">
+                                    <label class="col-sm-12 text-left">Description</label>
+                                    <div class="col-sm-12">{{ $description }}</div>
+                                </div>
                             </div>
-                        </div>
+                            @endif
 
                         <hr/>
-                        <div class="form-group">
-                            <div class="col-sm-12 text-center">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="id" value="{{ $id }}">
-                                <input type="hidden" name="urlFrom" value="{{ $urlFrom }}">
-                                <button class="btn btn-sm btn-primary btn-block" type="submit">Submit</button>
+                        @if($user)
+                            <div class="form-group">
+                                <div class="col-sm-12 text-center">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="id" value="{{ $id }}">
+                                    <input type="hidden" name="urlFrom" value="{{ $urlFrom }}">
+                                    <button class="btn btn-sm btn-primary btn-block" type="submit">Submit</button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </form>
             </div>

@@ -25,9 +25,6 @@ class LoginController extends Controller
 
             if ($user) {
                 Auth::login($user);
-                $message = array(
-                    'success' => 'Welcome'
-                );
             }
         }
 

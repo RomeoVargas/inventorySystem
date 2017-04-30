@@ -62,7 +62,7 @@ Route::group(['middleware' => 'noLoginRequired'], function() {
 
 Route::group(['middleware' => 'loginRequired'], function() {
     Route::get('/admin/home', function () {
-        return view('admin.home');
+        return redirect('/admin/order/list');
     });
     Route::get('/admin/products', 'Admin\ProductController@index');
     Route::post('/admin/products/save', 'Admin\ProductController@save');

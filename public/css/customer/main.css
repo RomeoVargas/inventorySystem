@@ -38,6 +38,11 @@ td {
     color: tomato;
 }
 
+.product-item .close {
+    font-size: 2em;
+    color: maroon !important;
+}
+
 .modal-content .modal-header .close{
     color: white;
 }
@@ -76,6 +81,10 @@ td {
     vertical-align: top;
     display: inline-table;
     text-align: left;
+}
+
+a:hover {
+    cursor: pointer !important;
 }
 
 .needs-restock {

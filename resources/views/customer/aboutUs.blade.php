@@ -35,7 +35,9 @@
             </ul>
         </div>
         <div class="col-md-5">
-          <img src="{{ asset('img/contactUs.png') }}">
+            <img style="width: 100%" src="{{ asset('img/contactUs.png') }}">
+            <br/><br/>
+            <iframe width="100%" style="height: 50vh" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.257916407037!2d121.08949961413005!3d14.584373989812816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c7f01c853e9b%3A0x32c4044124de4a76!2sChecon+Industries!5e0!3m2!1sen!2sph!4v1493539167113" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
     </div>
 @endsection

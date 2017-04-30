@@ -11,7 +11,7 @@ class LoginController extends BaseController
 {
     public function authenticate(Request $request)
     {
-        $urlTo = 'home';
+        $urlTo = 'order/list';
         $message = array();
         if (!Session::get('admin')) {
             $email = $request->get('email');

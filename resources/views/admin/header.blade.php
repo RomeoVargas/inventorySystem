@@ -15,9 +15,6 @@
             @php($routeName = get_route_name())
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="{{ trim($routeName, '/') == 'admin/home' ? 'active' : '' }}">
-                        <a class="navbar-item" href="{{ url('admin/home') }}">Home <span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="{{ trim($routeName, '/') == 'admin/order/list' ? 'active' : '' }}">
                         <a class="navbar-item" href="{{ url('admin/order/list') }}">Orders</a>
                     </li>

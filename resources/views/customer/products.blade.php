@@ -14,11 +14,15 @@
             @if($products->count())
                 @foreach($products as $product)
                     <div class="product-item">
-                        <div class="col-sm-12">{{ $product->name }}</div>
+                        <div class="col-sm-12">
+                            <a data-toggle="modal" data-target="#addToCartModal{{$product->id}}">
+                                {{ $product->name }}
+                            </a>
+                        </div>
                         <img class="product-image" src="{{ $product->getImage() }}">
                         @if($user = \Illuminate\Support\Facades\Auth::user())
-                            <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
-                            <div class="price col-sm-12 text-right">
+                            <div class="price col-sm-12 text-left">₱ {{ number_format($product->price) }}</div>
+                            <div class="price col-sm-12 text-left">
                                 @if(!$product->is_made_to_order)
                                     {{ number_format($product->stocks_left) }} in stock
                                 @else
@@ -26,7 +30,6 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="col-sm-12">{{ $product->description }}</div>
                         @if($user)
                             <div class="col-sm-12 text-right">
                                 <a data-toggle="modal" data-target="#addToCartModal{{$product->id}}" class="btn btn-sm btn-info">

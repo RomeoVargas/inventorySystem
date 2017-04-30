@@ -15,29 +15,29 @@
                 @foreach($products as $product)
                     <div class="product-item {{ $product->isNeedsRestock() ? 'needs-restock' : '' }}">
                         <div class="col-sm-12">
-                            <a href="#" data-toggle="modal" data-target="#addProductModal{{$product->id}}">
-                                {{ $product->name }}
-                            </a>
+                            <div class="text-right">
+                                <a data-href="{{ url('admin/products/delete', ['id' => $product->id]) }}"
+                                   data-toggle="modal" data-item-type="product" data-item-name="{{ $product->name }}"
+                                   data-target="#confirm-delete" class="close" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </a>
+                            </div>
+                            <div class="text-left">
+                                <a href="#" data-toggle="modal" data-target="#addProductModal{{$product->id}}">
+                                    {{ $product->name }}
+                                </a>
+                            </div>
                         </div>
                         <img class="product-image" src="{{ $product->getImage() }}">
-                        <div class="price col-sm-12 text-right">₱ {{ number_format($product->price) }}</div>
-                        <div class="price col-sm-12 text-right">
+                        <div class="price col-sm-12 text-left">₱ {{ number_format($product->price) }}</div>
+                        <div class="price col-sm-12 text-left">
                             @if($product->is_made_to_order)
                                 Made to order
                             @else
                                 {{ number_format($product->stocks_left) }} in stock
                             @endif
                         </div>
-                        <div class="col-sm-12">{{ $product->description }}</div>
                         <div class="col-sm-12 text-right">
-                            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProductModal{{$product->id}}">
-                                <i class="glyphicon glyphicon-edit"></i> Edit
-                            </a>
-                            <a data-href="{{ url('admin/products/delete', ['id' => $product->id]) }}"
-                               data-toggle="modal" data-item-type="product" data-item-name="{{ $product->name }}"
-                               data-target="#confirm-delete" class="btn btn-sm btn-danger">
-                                <i class="glyphicon glyphicon-remove"></i> Delete
-                            </a>
                         </div>
                     </div>
                 @endforeach
