@@ -27,21 +27,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-        // Insert some stuff
-        DB::table('users')->insert(
-            array(
-                'email'             => 'checon_industry@yahoo.com',
-                'auth_type'         => User::AUTH_TYPE_SUPER_ADMIN,
-                'password'          => md5('password123123'),
-                'first_name'        => 'admin',
-                'last_name'         => 'admin',
-                'contact_number'    => '',
-                'address'           => '',
-                'created_at'        => Carbon::now(),
-                'updated_at'        => Carbon::now()
-            )
-        );
     }
 
     /**
